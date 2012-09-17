@@ -7,7 +7,7 @@ import br.com.caelum.vraptor.Resource;
 public class ErrorController {
 
 	@Path("/egg/hiuvfh84m8")
-	void error() {
+	public void error() {
 		throw new RuntimeException("Unable to do anything");
 	}
 }
