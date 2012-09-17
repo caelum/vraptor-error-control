@@ -1,0 +1,6 @@
+target
+testing.properties
+.classpath
+.settings
+.project
+*.class
