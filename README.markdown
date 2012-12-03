@@ -1,4 +1,5 @@
 ## vraptor-error-control
+![Build status](https://secure.travis-ci.org/caelum/vraptor-error-control.png)
 
 A simple vraptor plugin that allows you to real time control error messages sending them by email
 
