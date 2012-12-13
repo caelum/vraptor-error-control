@@ -1,6 +1,7 @@
 package br.com.caelum.vraptor.errormail;
 
 import java.io.PrintWriter;
+
 import java.io.StringWriter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,15 +13,15 @@ import org.slf4j.LoggerFactory;
 
 import br.com.caelum.vraptor.environment.Environment;
 import br.com.caelum.vraptor.ioc.Component;
-import br.com.caelum.vraptor.simplemail.AsyncMailer;
+import br.com.caelum.vraptor.simplemail.Mailer;
 
 @Component
 public class ErrorMailer {
 	private static final String TARGET_MAILING_LIST = "vraptor.simplemail.main.error-mailing-list";
-	private final AsyncMailer mailer;
+	private final Mailer mailer;
 	private final Environment env;
 
-	public ErrorMailer(AsyncMailer mailer, Environment env) {
+	public ErrorMailer(Mailer mailer, Environment env) {
 		this.mailer = mailer;
 		this.env = env;
 	}
@@ -37,7 +38,7 @@ public class ErrorMailer {
 		
 		try {
 			SimpleEmail email = createEmailFor(msg, e);
-			mailer.asyncSend(email);
+			mailer.send(email);
 		} catch (Exception ex) {
 			logger.error("Unable to send error by email. THIS IS HARDCORE, nobody will know about this error.", ex);
 		}
