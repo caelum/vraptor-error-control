@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.caelum.vraptor.environment.ServletBasedEnvironment;
+import br.com.caelum.vraptor.errormail.mail.ErrorMail;
+import br.com.caelum.vraptor.errormail.mail.ErrorMailFactory;
+import br.com.caelum.vraptor.errormail.mail.ErrorMailer;
 import br.com.caelum.vraptor.simplemail.Mailer;
 import br.com.caelum.vraptor.simplemail.MailerFactory;
 
@@ -31,9 +34,8 @@ public class ErrorLoggerServlet extends HttpServlet {
 	@Override
 	public void service(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-		Throwable t = (Throwable) req.getAttribute("javax.servlet.error.exception");
-		mailer.register("An error occurred and we trapped him: ", req, t);
-
+		ErrorMail errorMail = new ErrorMailFactory(req).build();
+		mailer.register(errorMail);
 		req.getRequestDispatcher("/WEB-INF/jsp/error/500.jsp").forward(req, res);
 	}
 }
