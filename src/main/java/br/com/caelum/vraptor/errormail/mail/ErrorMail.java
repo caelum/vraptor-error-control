@@ -29,4 +29,8 @@ public class ErrorMail {
 	private boolean hasParameters() {
 		return requestParameters != null && !requestParameters.isEmpty();
 	}
+
+	public String getStackTrace() {
+		return stackTrace;
+	}
 }

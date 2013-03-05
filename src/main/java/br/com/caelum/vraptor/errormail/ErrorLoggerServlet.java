@@ -36,6 +36,7 @@ public class ErrorLoggerServlet extends HttpServlet {
 			throws ServletException, IOException {
 		ErrorMail errorMail = new ErrorMailFactory(req).build();
 		mailer.register(errorMail);
+		req.setAttribute("stackTrace", errorMail.getStackTrace());
 		req.getRequestDispatcher("/WEB-INF/jsp/error/500.jsp").forward(req, res);
 	}
 }
