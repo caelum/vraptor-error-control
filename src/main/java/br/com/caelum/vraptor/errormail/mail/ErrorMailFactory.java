@@ -12,7 +12,7 @@ public class ErrorMailFactory {
 
 	private final HttpServletRequest req;
 	private final Environment env;
-	private static final String CURRENT_USER = "currentUser";
+	protected static final String CURRENT_USER = "currentUser";
 	protected static final String SIMPLE_MAIL_FROM_NAME = "vraptor.simplemail.main.from.name";
 	protected static final String SIMPLE_MAIL_FROM = "vraptor.simplemail.main.from";
 	protected static final String REQUEST_PARAMETERS = "javax.servlet.forward.query_string";
@@ -28,7 +28,7 @@ public class ErrorMailFactory {
 	public ErrorMail build() throws EmailException{
 		Throwable t = (Throwable) req.getAttribute(EXCEPTION);
 		String referer = (String) req.getAttribute(REQUEST_URI);
-		Object user = (String) req.getAttribute(CURRENT_USER);
+		Object user = (Object) req.getAttribute(CURRENT_USER);
 		String queryString = "";
 		if(req.getMethod().equals("GET")){
 			queryString = (String) req.getAttribute(REQUEST_PARAMETERS);
