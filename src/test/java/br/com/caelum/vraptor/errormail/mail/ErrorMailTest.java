@@ -17,7 +17,6 @@ public class ErrorMailTest {
 	@Test
 	public void should_not_show_parameters_if_its_empty() {
 		ErrorMail errorMail = new ErrorMail("test", "my stack", "/my/url", "", null, "mailinglist@list.com", "vraptor@vraptor", "vraptor");
-		assertFalse(errorMail.getMsg().contains("Parameters: "));
 		assertThat(errorMail.getMsg(), not(containsString("Parameters: ")));
 	}
 	
