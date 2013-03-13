@@ -4,7 +4,6 @@ import static br.com.caelum.vraptor.errormail.mail.ErrorMailFactory.CURRENT_USER
 import static br.com.caelum.vraptor.errormail.mail.ErrorMailFactory.EXCEPTION;
 import static br.com.caelum.vraptor.errormail.mail.ErrorMailFactory.REQUEST_PARAMETERS;
 import static br.com.caelum.vraptor.errormail.mail.ErrorMailFactory.REQUEST_URI;
-import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -16,8 +15,6 @@ import java.util.NoSuchElementException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.mail.EmailException;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,7 +37,6 @@ public class ErrorMailFactoryTest {
 	public void should_build_error_mail_using_request_and_environment() throws IOException, EmailException {
 		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test"));
 		ErrorMail errorMail = factory.build();
-		assertTrue(errorMail.getMsg().startsWith(expectedGETMsg()));
 		assertThat(errorMail.getMsg(), startsWith(expectedGETMsg()));
 	}
 	
@@ -49,8 +45,7 @@ public class ErrorMailFactoryTest {
 		when(request.getMethod()).thenReturn("POST");
 		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test"));
 		ErrorMail errorMail = factory.build();
-		System.out.println(errorMail);
-		assertTrue(errorMail.getMsg().startsWith(expectedPOSTMsg()));
+		assertThat(errorMail.getMsg(), startsWith(expectedPOSTMsg()));
 	}
 
 	@Test(expected = EmailException.class)
@@ -64,7 +59,6 @@ public class ErrorMailFactoryTest {
 	public void should_not_run_with_no_from() throws IOException, EmailException {
 		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test-without-from"));
 		factory.build();
-		
 	}
 	
 	private Throwable exception() {
