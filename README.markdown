@@ -43,7 +43,8 @@ In your web.xml file, you need to map the error-code 500 to /error500:
 			<location>/error500</location>
 		</error-page>
 		
-(After sending the email, the vraptor-error-control will forward the request to jsp/error/500.jsp)
+After sending the email, the vraptor-error-control will forward the request to jsp/error/500.jsp
+and include the stack trace as an attribute of the request with the key "stackTrace".
 
 # help
 
