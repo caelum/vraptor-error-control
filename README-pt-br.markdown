@@ -2,7 +2,7 @@
 
 Um plugin simples para o VRaptor que permite o controle em tempo real de mensagens de erro enviando-as por email.
 
-# installing
+# Instalando
 
 O arquivo vraptor-error-control.jar pode ser baixado do repositório do Maven ou configurado em qualquer ferramenta compatível:
 
@@ -39,9 +39,10 @@ Em seu arquivo web.xml, é necessário mapear o error-code 500 para /error500:
 			<error-code>500</error-code>	
 			<location>/error500</location>
 		</error-page>
-		
-(Depois de enviar o email, o vraptor-error-control irá redirecionar a requisição para jsp/error/500.jsp)
 
-# help
+Depois de enviar o email, o vraptor-error-control irá redirecionar a requisição para jsp/error/500.jsp
+e adicionar a exception como um atributo no request com a chave "stackTrace".
+
+# Ajuda
 
 Para maiores informações, consulte a lista de e-mails da comunidade VRaptor.
