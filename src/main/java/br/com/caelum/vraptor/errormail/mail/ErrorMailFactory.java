@@ -1,10 +1,14 @@
 package br.com.caelum.vraptor.errormail.mail;
 
 import static br.com.caelum.vraptor.errormail.util.StackToString.convertStackToString;
+import static org.joda.time.format.DateTimeFormat.forPattern;
+
+import java.util.NoSuchElementException;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.mail.EmailException;
+import org.joda.time.DateTime;
 
 import br.com.caelum.vraptor.environment.Environment;
 
@@ -19,6 +23,9 @@ public class ErrorMailFactory {
 	protected static final String REQUEST_URI = "javax.servlet.forward.request_uri";
 	protected static final String EXCEPTION = "javax.servlet.error.exception";
 	protected static final String TARGET_MAILING_LIST = "vraptor.simplemail.main.error-mailing-list";
+	protected static final String ERROR_DATE_PATTERN = "vraptor.errorcontrol.date.joda.pattern";
+	protected static final String DEFAULT_SUBJECT = "production error";
+	private static final String ERROR_MAIL_SUBJECT = "vraptor.errorcontrol.error.subject";
 
 	public ErrorMailFactory(HttpServletRequest req, Environment env) {
 		this.req = req;
@@ -39,7 +46,29 @@ public class ErrorMailFactory {
 		String mailingList = env.get(TARGET_MAILING_LIST);
 		String from = env.get(SIMPLE_MAIL_FROM);
 		String fromName = env.get(SIMPLE_MAIL_FROM_NAME);
-		return new ErrorMail("production error",  convertStackToString(t), referer, queryString, user, mailingList, from, fromName);
+		String subject = getSubject();
+		
+		return new ErrorMail(subject,  convertStackToString(t), referer, queryString, user, mailingList, from, fromName);
+	}
+
+	private String getSubject() {
+		StringBuilder subject = new StringBuilder();
+		subject.append(getProperty(ERROR_MAIL_SUBJECT, DEFAULT_SUBJECT));
+		try{
+			String pattern = env.get(ERROR_DATE_PATTERN);
+			subject.append(" - "+forPattern(pattern).print(DateTime.now()));
+		}catch (NoSuchElementException e) {
+		}
+		return subject.toString();
+		
+	}
+
+	private String getProperty(String firstProperty, String defaultProperty) {
+		try {
+			return env.get(firstProperty);
+		} catch (NoSuchElementException e) {
+			return defaultProperty;
+		}
 	}
 
 	private String noMailingListMessage() {

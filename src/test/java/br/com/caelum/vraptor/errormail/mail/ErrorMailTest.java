@@ -3,7 +3,6 @@ package br.com.caelum.vraptor.errormail.mail;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 import org.apache.commons.mail.EmailException;
