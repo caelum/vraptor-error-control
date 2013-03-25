@@ -12,13 +12,13 @@ O arquivo vraptor-error-control.jar pode ser baixado do repositório do Maven ou
 			<version>1.0.0</version>
 			<scope>compile</scope>
 		</dependency>
-		
-		
+
+
 # Dependências
 Para usar o Vraptor Error Control é necessário ter os seguintes plugins no classpath:
 
-		vraptor-environment  
-		vraptor-simplemail  
+		vraptor-environment
+		vraptor-simplemail
 
 # Configurando
 No seu arquivo environment.properties(do vraptor-environment), é necessário configurar as seguintes chaves
@@ -37,14 +37,14 @@ Para modificar o assunto do email, use a seguinte chave:
 
 		vraptor.errorcontrol.error.subject
 
-Você pode mostrar, no assunto do email, a data de quando ele foi enviado adicionando um [padrão do joda time][http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html] na seguinte chave:
+Você pode mostrar, no assunto do email, a data de quando ele foi enviado adicionando um [padrão do joda time](http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html) na seguinte chave:
 
 		vraptor.errorcontrol.date.joda.pattern
 
 Em seu arquivo web.xml, é necessário mapear o error-code 500 para /error500:
-		
+
 		<error-page>
-			<error-code>500</error-code>	
+			<error-code>500</error-code>
 			<location>/error500</location>
 		</error-page>
 
