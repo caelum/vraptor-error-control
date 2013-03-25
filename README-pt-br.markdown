@@ -33,6 +33,14 @@ do vraptor-simplemail:
 		vraptor.simplemail.main.password
 		vraptor.simplemail.main.error-mailing-list
 
+Para modificar o assunto do email, use a seguinte chave:
+
+		vraptor.errorcontrol.error.subject
+
+Você pode mostrar, no assunto do email, a data de quando ele foi enviado adicionando um [padrão do joda time][http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html] na seguinte chave:
+
+		vraptor.errorcontrol.date.joda.pattern
+
 Em seu arquivo web.xml, é necessário mapear o error-code 500 para /error500:
 		
 		<error-page>
