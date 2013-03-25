@@ -1,10 +1,14 @@
 package br.com.caelum.vraptor.errormail.mail;
 
 import static br.com.caelum.vraptor.errormail.mail.ErrorMailFactory.CURRENT_USER;
+import static br.com.caelum.vraptor.errormail.mail.ErrorMailFactory.DEFAULT_SUBJECT;
+import static br.com.caelum.vraptor.errormail.mail.ErrorMailFactory.ERROR_DATE_PATTERN;
 import static br.com.caelum.vraptor.errormail.mail.ErrorMailFactory.EXCEPTION;
 import static br.com.caelum.vraptor.errormail.mail.ErrorMailFactory.REQUEST_PARAMETERS;
 import static br.com.caelum.vraptor.errormail.mail.ErrorMailFactory.REQUEST_URI;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
+import static org.joda.time.format.DateTimeFormat.forPattern;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -15,6 +19,7 @@ import java.util.NoSuchElementException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.mail.EmailException;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,16 +54,39 @@ public class ErrorMailFactoryTest {
 	}
 
 	@Test(expected = EmailException.class)
-	public void should_not_run_with_no_target_email_list() throws IOException, EmailException {
+	public void should_not_run_without_target_email_list() throws IOException, EmailException {
 		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test-without-email-list"));
 		factory.build();
 		
 	}
 
 	@Test(expected = NoSuchElementException.class)
-	public void should_not_run_with_no_from() throws IOException, EmailException {
+	public void should_not_run_without_from() throws IOException, EmailException {
 		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test-without-from"));
 		factory.build();
+	}
+		
+	@Test
+	public void should_use_default_subject_if_doesnt_exist_in_environment() throws IOException, EmailException {
+		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test-without-subject"));
+		ErrorMail email = factory.build();
+		assertThat(email.toSimpleMail().getSubject(), equalTo(DEFAULT_SUBJECT));
+	}
+	
+	@Test
+	public void should_use_provided_subject_if_exists_in_environment() throws IOException, EmailException {
+		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test-with-subject"));
+		ErrorMail email = factory.build();
+		assertThat(email.toSimpleMail().getSubject(), equalTo("Error at 'cat' project"));
+	}
+	
+	@Test
+	public void should_include_date_at_subject_if_pattern_is_present() throws IOException, EmailException {
+		DefaultEnvironment env = new DefaultEnvironment("test-with-datepattern");
+		ErrorMailFactory factory = new ErrorMailFactory(request, env);
+		ErrorMail email = factory.build();
+		String pattern = forPattern(env.get(ERROR_DATE_PATTERN)).print(DateTime.now());
+		assertThat(email.toSimpleMail().getSubject(), equalTo(DEFAULT_SUBJECT+" - "+pattern));
 	}
 	
 	private Throwable exception() {

@@ -36,6 +36,14 @@ vraptor-simplemail' keys:
 		vraptor.simplemail.main.password
 		vraptor.simplemail.main.error-mailing-list
 
+To customize the email's subject, use the key bellow:
+
+		vraptor.errorcontrol.error.subject
+
+You can display when the email was sent by adding a [joda time pattern][http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html] using the following key:
+
+		vraptor.errorcontrol.date.joda.pattern
+
 In your web.xml file, you need to map the error-code 500 to /error500:
 		
 		<error-page>
