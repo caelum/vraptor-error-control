@@ -14,8 +14,10 @@ public class ErrorMail {
 	private final String to;
 	private final String from;
 	private final String fromName;
+	private final String headers;
 
-	public ErrorMail(String subject, String stackTrace, String referer, String requestParameters, Object currentUser, String to, String from, String fromName) {
+	public ErrorMail(String subject, String stackTrace, String referer, String requestParameters, 
+			Object currentUser, String to, String from, String fromName, String headers) {
 		this.subject = subject;
 		this.stackTrace = stackTrace;
 		this.referer = referer;
@@ -24,6 +26,7 @@ public class ErrorMail {
 		this.to = to;
 		this.from = from;
 		this.fromName = fromName;
+		this.headers = headers;
 	}
 
 	public String getMsg() {
@@ -31,7 +34,7 @@ public class ErrorMail {
 		if (hasParameters()) {
 			params = "Parameters: " + requestParameters + "\n";
 		}
-		return "An error occurred and we trapped him: \n\n" + "URL: " + referer + "\n" + params + "User-id : "
+		return "An error occurred and we trapped him: \n\n" + "URL: " + referer + "\n" + params + "Headers:\n" + headers + "User-id : "
 				+ (currentUser != null ? currentUser : "UNLOGGED") + "\nException: \n" + stackTrace;
 	}
 	

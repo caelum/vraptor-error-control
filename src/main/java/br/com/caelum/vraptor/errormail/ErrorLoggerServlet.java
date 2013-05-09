@@ -49,4 +49,5 @@ public class ErrorLoggerServlet extends HttpServlet {
 			logger.error(e.getMessage());
 		}
 	}
+	
 }

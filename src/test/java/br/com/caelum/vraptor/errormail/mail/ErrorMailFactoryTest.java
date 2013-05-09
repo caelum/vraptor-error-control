@@ -109,6 +109,7 @@ public class ErrorMailFactoryTest {
 		return "An error occurred and we trapped him: \n\n" + 
 				"URL: /test\n" + 
 				parameters + 
+				"Headers:\n" + 
 				"User-id : Tester\n" + 
 				"Exception: \n" + 
 				"java.lang.Exception: my fake exception\n"; 

@@ -10,12 +10,13 @@ import org.junit.Test;
 
 public class ErrorMailTest {
 	
-	ErrorMail defaultErrorMail = new ErrorMail("test", "my stack", "/my/url", "my=param", null, "mailinglist@list.com", "vraptor@vraptor", "vraptor");
-	
+	private ErrorMail defaultErrorMail = new ErrorMail("test", "my stack", "/my/url", "my=param", null, 
+			"mailinglist@list.com", "vraptor@vraptor", "vraptor", "header-key: value\n");
 
 	@Test
 	public void should_not_show_parameters_if_its_empty() {
-		ErrorMail errorMail = new ErrorMail("test", "my stack", "/my/url", "", null, "mailinglist@list.com", "vraptor@vraptor", "vraptor");
+		ErrorMail errorMail = new ErrorMail("test", "my stack", "/my/url", "", null, "mailinglist@list.com", 
+				"vraptor@vraptor", "vraptor", "header-key: value\n");
 		assertThat(errorMail.getMsg(), not(containsString("Parameters: ")));
 	}
 	
@@ -26,9 +27,9 @@ public class ErrorMailTest {
 	
 	@Test
 	public void should_get_full_message() {
-		String expected = "An error occurred and we trapped him: \n\nURL: /my/url\nParameters: my=param\nUser-id :" +
+		String expected = "An error occurred and we trapped him: \n\nURL: /my/url\nParameters: my=param\nHeaders:\nheader-key: value\nUser-id :" +
 				" UNLOGGED\nException: \nmy stack";
-		assertThat(expected , equalTo(defaultErrorMail.getMsg()));
+		assertThat(defaultErrorMail.getMsg(), equalTo(expected));
 	}
 	
 	@Test

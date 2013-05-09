@@ -3,6 +3,7 @@ package br.com.caelum.vraptor.errormail.mail;
 import static br.com.caelum.vraptor.errormail.util.StackToString.convertStackToString;
 import static org.joda.time.format.DateTimeFormat.forPattern;
 
+import java.util.Enumeration;
 import java.util.NoSuchElementException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,23 +33,36 @@ public class ErrorMailFactory {
 		this.env = env;
 	}
 	
-	public ErrorMail build() throws EmailException{
+	public ErrorMail build() throws EmailException {
 		Throwable t = (Throwable) req.getAttribute(EXCEPTION);
 		String referer = (String) req.getAttribute(REQUEST_URI);
 		Object user = (Object) req.getAttribute(CURRENT_USER);
 		String queryString = "";
-		if(req.getMethod().equals("GET")){
+		if (req.getMethod().equals("GET")){
 			queryString = (String) req.getAttribute(REQUEST_PARAMETERS);
 		}
-		if(!env.has(TARGET_MAILING_LIST)) {
+		if (!env.has(TARGET_MAILING_LIST)) {
 			throw new EmailException(noMailingListMessage());
 		}
 		String mailingList = env.get(TARGET_MAILING_LIST);
 		String from = env.get(SIMPLE_MAIL_FROM);
 		String fromName = env.get(SIMPLE_MAIL_FROM_NAME);
+		String headers = getHeaders();
 		String subject = getSubject();
 		
-		return new ErrorMail(subject,  convertStackToString(t), referer, queryString, user, mailingList, from, fromName);
+		return new ErrorMail(subject, convertStackToString(t), referer, 
+				queryString, user, mailingList, from, fromName, headers);
+	}
+
+	private String getHeaders() {
+		Enumeration<String> headerNames = req.getHeaderNames();
+		StringBuilder headers = new StringBuilder("");
+		while (headerNames != null && headerNames.hasMoreElements()) {
+			String name = headerNames.nextElement();
+			headers.append("    " + name + ": ");
+			headers.append(req.getHeader(name) + "\n");
+		}
+		return headers.toString();
 	}
 
 	private String getSubject() {
@@ -74,4 +88,5 @@ public class ErrorMailFactory {
 	private String noMailingListMessage() {
 		return "No target mailing list for error messages was set in " + env.getName() + ". THIS IS HARDCORE, nobody will know about this error.";
 	}
+	
 }
