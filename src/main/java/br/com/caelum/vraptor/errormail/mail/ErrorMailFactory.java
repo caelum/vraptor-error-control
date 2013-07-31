@@ -32,11 +32,11 @@ public class ErrorMailFactory {
 		this.req = req;
 		this.env = env;
 	}
-	
+
 	public ErrorMail build() throws EmailException {
 		Throwable t = (Throwable) req.getAttribute(EXCEPTION);
 		String referer = (String) req.getAttribute(REQUEST_URI);
-		Object user = (Object) req.getAttribute(CURRENT_USER);
+		Object user = req.getAttribute(CURRENT_USER);
 		String queryString = "";
 		if (req.getMethod().equals("GET")){
 			queryString = (String) req.getAttribute(REQUEST_PARAMETERS);
@@ -49,8 +49,8 @@ public class ErrorMailFactory {
 		String fromName = env.get(SIMPLE_MAIL_FROM_NAME);
 		String headers = getHeaders();
 		String subject = getSubject();
-		
-		return new ErrorMail(subject, convertStackToString(t), referer, 
+
+		return new DefaultErrorMail(subject, convertStackToString(t), referer,
 				queryString, user, mailingList, from, fromName, headers);
 	}
 
@@ -74,7 +74,7 @@ public class ErrorMailFactory {
 		}catch (NoSuchElementException e) {
 		}
 		return subject.toString();
-		
+
 	}
 
 	private String getProperty(String firstProperty, String defaultProperty) {
@@ -88,5 +88,5 @@ public class ErrorMailFactory {
 	private String noMailingListMessage() {
 		return "No target mailing list for error messages was set in " + env.getName() + ". THIS IS HARDCORE, nobody will know about this error.";
 	}
-	
+
 }
