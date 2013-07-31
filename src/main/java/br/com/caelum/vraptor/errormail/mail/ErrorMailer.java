@@ -16,7 +16,7 @@ public class ErrorMailer {
 		this.mailer = mailer;
 	}
 
-	public void register(ErrorMail errorMail) {
+	public void register(DefaultErrorMail errorMail) {
 		logger.error(errorMail.getMsg());
 		try {
 			SimpleEmail email = errorMail.toSimpleMail();
