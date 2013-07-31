@@ -41,7 +41,7 @@ public class ErrorMailFactoryTest {
 	@Test
 	public void should_build_error_mail_using_request_and_environment() throws IOException, EmailException {
 		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test"));
-		ErrorMail errorMail = factory.build();
+		DefaultErrorMail errorMail = factory.build();
 		assertThat(errorMail.getMsg(), startsWith(expectedGETMsg()));
 	}
 	
@@ -49,7 +49,7 @@ public class ErrorMailFactoryTest {
 	public void should_not_show_parameters_if_request_method_is_not_get() throws IOException, EmailException {
 		when(request.getMethod()).thenReturn("POST");
 		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test"));
-		ErrorMail errorMail = factory.build();
+		DefaultErrorMail errorMail = factory.build();
 		assertThat(errorMail.getMsg(), startsWith(expectedPOSTMsg()));
 	}
 
@@ -69,14 +69,14 @@ public class ErrorMailFactoryTest {
 	@Test
 	public void should_use_default_subject_if_doesnt_exist_in_environment() throws IOException, EmailException {
 		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test-without-subject"));
-		ErrorMail email = factory.build();
+		DefaultErrorMail email = factory.build();
 		assertThat(email.toSimpleMail().getSubject(), equalTo(DEFAULT_SUBJECT));
 	}
 	
 	@Test
 	public void should_use_provided_subject_if_exists_in_environment() throws IOException, EmailException {
 		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test-with-subject"));
-		ErrorMail email = factory.build();
+		DefaultErrorMail email = factory.build();
 		assertThat(email.toSimpleMail().getSubject(), equalTo("Error at 'cat' project"));
 	}
 	
@@ -84,7 +84,7 @@ public class ErrorMailFactoryTest {
 	public void should_include_date_at_subject_if_pattern_is_present() throws IOException, EmailException {
 		DefaultEnvironment env = new DefaultEnvironment("test-with-datepattern");
 		ErrorMailFactory factory = new ErrorMailFactory(request, env);
-		ErrorMail email = factory.build();
+		DefaultErrorMail email = factory.build();
 		String pattern = forPattern(env.get(ERROR_DATE_PATTERN)).print(DateTime.now());
 		assertThat(email.toSimpleMail().getSubject(), equalTo(DEFAULT_SUBJECT+" - "+pattern));
 	}

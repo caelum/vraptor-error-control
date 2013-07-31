@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.com.caelum.vraptor.environment.ServletBasedEnvironment;
-import br.com.caelum.vraptor.errormail.mail.ErrorMail;
+import br.com.caelum.vraptor.errormail.mail.DefaultErrorMail;
 import br.com.caelum.vraptor.errormail.mail.ErrorMailFactory;
 import br.com.caelum.vraptor.errormail.mail.ErrorMailer;
 import br.com.caelum.vraptor.simplemail.Mailer;
@@ -41,7 +41,7 @@ public class ErrorLoggerServlet extends HttpServlet {
 	public void service(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		try {
-			ErrorMail errorMail = new ErrorMailFactory(req, env).build();
+			DefaultErrorMail errorMail = new ErrorMailFactory(req, env).build();
 			mailer.register(errorMail);
 			req.setAttribute("stackTrace", errorMail.getStackTrace());
 			req.getRequestDispatcher("/WEB-INF/jsp/error/500.jsp").forward(req, res);

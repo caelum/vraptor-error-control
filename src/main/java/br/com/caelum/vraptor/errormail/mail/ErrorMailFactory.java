@@ -33,7 +33,7 @@ public class ErrorMailFactory {
 		this.env = env;
 	}
 	
-	public ErrorMail build() throws EmailException {
+	public DefaultErrorMail build() throws EmailException {
 		Throwable t = (Throwable) req.getAttribute(EXCEPTION);
 		String referer = (String) req.getAttribute(REQUEST_URI);
 		Object user = (Object) req.getAttribute(CURRENT_USER);
@@ -50,7 +50,7 @@ public class ErrorMailFactory {
 		String headers = getHeaders();
 		String subject = getSubject();
 		
-		return new ErrorMail(subject, convertStackToString(t), referer, 
+		return new DefaultErrorMail(subject, convertStackToString(t), referer, 
 				queryString, user, mailingList, from, fromName, headers);
 	}
 
