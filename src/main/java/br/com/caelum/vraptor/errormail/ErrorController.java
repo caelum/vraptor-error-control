@@ -1,9 +1,9 @@
 package br.com.caelum.vraptor.errormail;
 
-import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.Resource;
+import br.com.caelum.vraptor4.Controller;
+import br.com.caelum.vraptor4.Path;
 
-@Resource
+@Controller
 public class ErrorController {
 
 	@Path("/egg/hiuvfh84m8")
