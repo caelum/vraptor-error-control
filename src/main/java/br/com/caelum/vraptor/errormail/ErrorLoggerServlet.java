@@ -31,17 +31,6 @@ public class ErrorLoggerServlet extends HttpServlet {
 	@Inject
 	private ServletBasedEnvironment env;
 
-//	@Override
-//	public void init() throws ServletException {
-//		try {
-//			env = new ServletBasedEnvironment(this.getServletContext());
-//			Mailer mailer = new MailerFactory(env).getInstance();
-//			this.mailer = new ErrorMailer(mailer);
-//		} catch (IOException e) {
-//			throw new ServletException("Unable to initialize error servlet", e);
-//		}
-//	}
-
 	@Override
 	public void service(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
