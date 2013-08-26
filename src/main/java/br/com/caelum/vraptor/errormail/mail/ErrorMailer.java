@@ -4,10 +4,8 @@ import org.apache.commons.mail.SimpleEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.simplemail.Mailer;
 
-@Component
 public class ErrorMailer {
 	private final Mailer mailer;
 	private static Logger logger = LoggerFactory.getLogger(ErrorMailer.class);
