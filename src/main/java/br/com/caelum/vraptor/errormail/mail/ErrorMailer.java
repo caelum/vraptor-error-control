@@ -1,5 +1,7 @@
 package br.com.caelum.vraptor.errormail.mail;
 
+import javax.inject.Inject;
+
 import org.apache.commons.mail.SimpleEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +11,13 @@ import br.com.caelum.vraptor.simplemail.Mailer;
 public class ErrorMailer {
 	private final Mailer mailer;
 	private static Logger logger = LoggerFactory.getLogger(ErrorMailer.class);
+	
+	@Deprecated
+	ErrorMailer() {
+		this(null);
+	}
 
+	@Inject
 	public ErrorMailer(Mailer mailer) {
 		this.mailer = mailer;
 	}
