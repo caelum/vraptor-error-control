@@ -9,7 +9,7 @@ import static br.com.caelum.vraptor.errormail.mail.ErrorMailFactory.REQUEST_URI;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 import static org.joda.time.format.DateTimeFormat.forPattern;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,6 +22,7 @@ import org.apache.commons.mail.EmailException;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import br.com.caelum.vraptor.environment.DefaultEnvironment;
 
@@ -64,6 +65,17 @@ public class ErrorMailFactoryTest {
 	public void should_not_run_without_from() throws IOException, EmailException {
 		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test-without-from"));
 		factory.build();
+	}
+	
+	@Test
+	public void should_work_with_fake_request() throws Exception {
+		DefaultEnvironment env = new DefaultEnvironment("test-with-datepattern");
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		when(req.getMethod()).thenReturn(null);
+		when(req.getAttribute(ErrorMailFactory.EXCEPTION)).thenReturn(new Exception("test"));
+		
+		ErrorMail mail = new ErrorMailFactory(req, env).build();
+		assertNotNull(mail);
 	}
 		
 	@Test

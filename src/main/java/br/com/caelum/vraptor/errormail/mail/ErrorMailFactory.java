@@ -38,7 +38,7 @@ public class ErrorMailFactory {
 		String referer = (String) req.getAttribute(REQUEST_URI);
 		Object user = req.getAttribute(CURRENT_USER);
 		String queryString = "";
-		if (req.getMethod().equals("GET")){
+		if ("GET".equals(req.getMethod())){
 			queryString = (String) req.getAttribute(REQUEST_PARAMETERS);
 		}
 		if (!env.has(TARGET_MAILING_LIST)) {
