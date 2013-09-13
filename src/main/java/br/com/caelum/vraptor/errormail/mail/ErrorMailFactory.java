@@ -17,15 +17,15 @@ public class ErrorMailFactory {
 
 	private final HttpServletRequest req;
 	private final Environment env;
-	protected static final String CURRENT_USER = "currentUser";
-	protected static final String SIMPLE_MAIL_FROM_NAME = "vraptor.simplemail.main.from.name";
-	protected static final String SIMPLE_MAIL_FROM = "vraptor.simplemail.main.from";
-	protected static final String REQUEST_PARAMETERS = "javax.servlet.forward.query_string";
-	protected static final String REQUEST_URI = "javax.servlet.forward.request_uri";
-	protected static final String EXCEPTION = "javax.servlet.error.exception";
-	protected static final String TARGET_MAILING_LIST = "vraptor.simplemail.main.error-mailing-list";
-	protected static final String ERROR_DATE_PATTERN = "vraptor.errorcontrol.date.joda.pattern";
-	protected static final String DEFAULT_SUBJECT = "production error";
+	public static final String CURRENT_USER = "currentUser";
+	public static final String SIMPLE_MAIL_FROM_NAME = "vraptor.simplemail.main.from.name";
+	public static final String SIMPLE_MAIL_FROM = "vraptor.simplemail.main.from";
+	public static final String REQUEST_PARAMETERS = "javax.servlet.forward.query_string";
+	public static final String REQUEST_URI = "javax.servlet.forward.request_uri";
+	public static final String EXCEPTION = "javax.servlet.error.exception";
+	public static final String TARGET_MAILING_LIST = "vraptor.simplemail.main.error-mailing-list";
+	public static final String ERROR_DATE_PATTERN = "vraptor.errorcontrol.date.joda.pattern";
+	public static final String DEFAULT_SUBJECT = "production error";
 	private static final String ERROR_MAIL_SUBJECT = "vraptor.errorcontrol.error.subject";
 
 	public ErrorMailFactory(HttpServletRequest req, Environment env) {
