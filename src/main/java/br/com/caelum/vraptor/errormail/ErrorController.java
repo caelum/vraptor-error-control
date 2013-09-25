@@ -1,7 +1,7 @@
 package br.com.caelum.vraptor.errormail;
 
-import br.com.caelum.vraptor4.Controller;
-import br.com.caelum.vraptor4.Path;
+import br.com.caelum.vraptor.Controller;
+import br.com.caelum.vraptor.Path;
 
 @Controller
 public class ErrorController {

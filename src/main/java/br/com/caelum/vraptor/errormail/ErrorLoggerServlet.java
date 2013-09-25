@@ -17,8 +17,6 @@ import br.com.caelum.vraptor.environment.ServletBasedEnvironment;
 import br.com.caelum.vraptor.errormail.mail.ErrorMail;
 import br.com.caelum.vraptor.errormail.mail.ErrorMailFactory;
 import br.com.caelum.vraptor.errormail.mail.ErrorMailer;
-import br.com.caelum.vraptor.simplemail.Mailer;
-import br.com.caelum.vraptor.simplemail.MailerFactory;
 
 @WebServlet(urlPatterns="/error500", displayName="error-servlet")
 public class ErrorLoggerServlet extends HttpServlet {
