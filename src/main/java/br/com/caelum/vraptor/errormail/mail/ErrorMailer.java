@@ -9,14 +9,12 @@ import org.slf4j.LoggerFactory;
 import br.com.caelum.vraptor.simplemail.Mailer;
 
 public class ErrorMailer {
-	private final Mailer mailer;
+	private Mailer mailer;
 	private static Logger logger = LoggerFactory.getLogger(ErrorMailer.class);
 	
-	@Deprecated
-	ErrorMailer() {
-		this(null);
-	}
-
+	@Deprecated //CDI eyes only
+	public ErrorMailer() {}
+	
 	@Inject
 	public ErrorMailer(Mailer mailer) {
 		this.mailer = mailer;
