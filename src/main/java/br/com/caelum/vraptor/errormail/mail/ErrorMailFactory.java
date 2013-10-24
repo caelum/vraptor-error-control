@@ -35,6 +35,8 @@ public class ErrorMailFactory {
 
 	public ErrorMail build() throws EmailException {
 		Throwable t = (Throwable) req.getAttribute(EXCEPTION);
+		if(t == null) throw new EmailException("Cannot send exception email without exception");
+		
 		String referer = (String) req.getAttribute(REQUEST_URI);
 		Object user = req.getAttribute(CURRENT_USER);
 		String queryString = "";
