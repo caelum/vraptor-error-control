@@ -59,6 +59,14 @@ public class ErrorMailFactoryTest {
 		factory.build();
 		
 	}
+	
+	@Test(expected = EmailException.class)
+	public void should_not_run_without_exception() throws IOException, EmailException {
+		request = mock(HttpServletRequest.class);
+		ErrorMailFactory factory = new ErrorMailFactory(request, new DefaultEnvironment("test"));
+		factory.build();
+		
+	}
 
 	@Test(expected = NoSuchElementException.class)
 	public void should_not_run_without_from() throws IOException, EmailException {
