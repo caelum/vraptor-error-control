@@ -1,17 +1,21 @@
 package br.com.caelum.vraptor.errormail.mail;
 
+import javax.inject.Inject;
+
 import org.apache.commons.mail.SimpleEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.simplemail.Mailer;
 
-@Component
 public class ErrorMailer {
-	private final Mailer mailer;
+	private Mailer mailer;
 	private static Logger logger = LoggerFactory.getLogger(ErrorMailer.class);
-
+	
+	@Deprecated //CDI eyes only
+	public ErrorMailer() {}
+	
+	@Inject
 	public ErrorMailer(Mailer mailer) {
 		this.mailer = mailer;
 	}
