@@ -3,10 +3,7 @@ package br.com.caelum.vraptor.errormail.mail;
 import static br.com.caelum.vraptor.errormail.util.StackToString.convertStackToString;
 import static org.joda.time.format.DateTimeFormat.forPattern;
 
-import java.util.Enumeration;
 import java.util.NoSuchElementException;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.mail.EmailException;
 import org.joda.time.DateTime;
@@ -15,55 +12,40 @@ import br.com.caelum.vraptor.environment.Environment;
 
 public class ErrorMailFactory {
 
-	private final HttpServletRequest req;
 	private final Environment env;
-	public static final String CURRENT_USER = "currentUser";
+	private final ExceptionData req;
 	public static final String SIMPLE_MAIL_FROM_NAME = "vraptor.simplemail.main.from.name";
 	public static final String SIMPLE_MAIL_FROM = "vraptor.simplemail.main.from";
 	public static final String REQUEST_PARAMETERS = "javax.servlet.forward.query_string";
-	public static final String REQUEST_URI = "javax.servlet.forward.request_uri";
-	public static final String EXCEPTION = "javax.servlet.error.exception";
 	public static final String TARGET_MAILING_LIST = "vraptor.simplemail.main.error-mailing-list";
 	public static final String ERROR_DATE_PATTERN = "vraptor.errorcontrol.date.joda.pattern";
 	public static final String DEFAULT_SUBJECT = "production error";
 	private static final String ERROR_MAIL_SUBJECT = "vraptor.errorcontrol.error.subject";
 
-	public ErrorMailFactory(HttpServletRequest req, Environment env) {
+	public ErrorMailFactory(ExceptionData req, Environment env) {
 		this.req = req;
 		this.env = env;
 	}
 
 	public ErrorMail build() throws EmailException {
-		Throwable t = (Throwable) req.getAttribute(EXCEPTION);
-		String referer = (String) req.getAttribute(REQUEST_URI);
-		Object user = req.getAttribute(CURRENT_USER);
-		String queryString = "";
-		if ("GET".equals(req.getMethod())){
-			queryString = (String) req.getAttribute(REQUEST_PARAMETERS);
-		}
+		Throwable t = req.getException();
+		String referer = req.getUri();
+		Object user = req.getUser();
+		
+		String queryString = req.getQueryString();
 		if (!env.has(TARGET_MAILING_LIST)) {
 			throw new EmailException(noMailingListMessage());
 		}
 		String mailingList = env.get(TARGET_MAILING_LIST);
 		String from = env.get(SIMPLE_MAIL_FROM);
 		String fromName = env.get(SIMPLE_MAIL_FROM_NAME);
-		String headers = getHeaders();
+		String headers = req.getHeaders();
 		String subject = getSubject();
 
 		return new DefaultErrorMail(subject, convertStackToString(t), referer,
 				queryString, user, mailingList, from, fromName, headers);
 	}
 
-	private String getHeaders() {
-		Enumeration<String> headerNames = req.getHeaderNames();
-		StringBuilder headers = new StringBuilder("");
-		while (headerNames != null && headerNames.hasMoreElements()) {
-			String name = headerNames.nextElement();
-			headers.append("    " + name + ": ");
-			headers.append(req.getHeader(name) + "\n");
-		}
-		return headers.toString();
-	}
 
 	private String getSubject() {
 		StringBuilder subject = new StringBuilder();

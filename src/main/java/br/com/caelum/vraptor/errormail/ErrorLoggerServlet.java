@@ -17,6 +17,7 @@ import br.com.caelum.vraptor.environment.ServletBasedEnvironment;
 import br.com.caelum.vraptor.errormail.mail.ErrorMail;
 import br.com.caelum.vraptor.errormail.mail.ErrorMailFactory;
 import br.com.caelum.vraptor.errormail.mail.ErrorMailer;
+import br.com.caelum.vraptor.errormail.mail.ExceptionData;
 
 @WebServlet(urlPatterns="/error500", displayName="error-servlet")
 public class ErrorLoggerServlet extends HttpServlet {
@@ -33,7 +34,7 @@ public class ErrorLoggerServlet extends HttpServlet {
 	public void service(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		try {
-			ErrorMail errorMail = new ErrorMailFactory(req, env).build();
+			ErrorMail errorMail = new ErrorMailFactory(ExceptionData.fromRequest(req), env).build();
 			mailer.register(errorMail);
 			req.setAttribute("stackTrace", errorMail.getStackTrace());
 			req.getRequestDispatcher("/WEB-INF/jsp/error/500.jsp").forward(req, res);
