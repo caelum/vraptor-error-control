@@ -21,6 +21,7 @@ public class ErrorMailFactory {
 	public static final String ERROR_DATE_PATTERN = "vraptor.errorcontrol.date.joda.pattern";
 	public static final String DEFAULT_SUBJECT = "production error";
 	private static final String ERROR_MAIL_SUBJECT = "vraptor.errorcontrol.error.subject";
+	private static final String USE_MESSAGE_AS_SUBJECT = "vraptor.errorcontrol.exception.subject";
 
 	public ErrorMailFactory(ExceptionData req, Environment env) {
 		this.req = req;
@@ -54,6 +55,9 @@ public class ErrorMailFactory {
 			String pattern = env.get(ERROR_DATE_PATTERN);
 			subject.append(" - "+forPattern(pattern).print(DateTime.now()));
 		}catch (NoSuchElementException e) {
+		}
+		if(getProperty(USE_MESSAGE_AS_SUBJECT, "false").equalsIgnoreCase("true")){
+			subject.append(" - " + req.getException().getMessage());
 		}
 		return subject.toString();
 
