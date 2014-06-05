@@ -56,13 +56,12 @@ public class ErrorMailFactory {
 			subject.append(" - "+forPattern(pattern).print(DateTime.now()));
 		}catch (NoSuchElementException e) {
 		}
-		if(getProperty(USE_MESSAGE_AS_SUBJECT, "false").equalsIgnoreCase("true")){
+		if(Boolean.valueOf(getProperty(USE_MESSAGE_AS_SUBJECT, "false"))){
 			subject.append(" - " + req.getException().getMessage());
 		}
 		return subject.toString();
-
 	}
-
+	
 	private String getProperty(String firstProperty, String defaultProperty) {
 		try {
 			return env.get(firstProperty);
