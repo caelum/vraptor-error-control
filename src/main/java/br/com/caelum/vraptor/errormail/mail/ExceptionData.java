@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionData {
 	
 	public static final String EXCEPTION = "javax.servlet.error.exception";
+    public static final String REQUEST_URI = "javax.servlet.forward.request_uri";
 	
 	private Throwable throwable;
 	private String uri;
@@ -26,7 +27,7 @@ public class ExceptionData {
 	
 	public static ExceptionData fromRequest(HttpServletRequest req) {
 		Throwable throwable = (Throwable) req.getAttribute(EXCEPTION);
-		String uri = req.getRequestURI();
+		String uri = (String) req.getAttribute(REQUEST_URI);
 		Object user = req.getAttribute(CURRENT_USER);
 		String queryString = "";
 		if ("GET".equals(req.getMethod())) {

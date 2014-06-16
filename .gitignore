@@ -4,3 +4,5 @@ testing.properties
 .settings
 .project
 *.class
+.idea
+*.iml
