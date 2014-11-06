@@ -9,16 +9,13 @@ O arquivo vraptor-error-control.jar pode ser baixado do repositório do Maven ou
 		<dependency>
 			<groupId>br.com.caelum.vraptor</groupId>
 			<artifactId>vraptor-error-control</artifactId>
-			<version>1.0.0</version>
+			<version>4.0.2</version>
 			<scope>compile</scope>
 		</dependency>
 
 
 # Dependências
-Para usar o Vraptor Error Control é necessário ter os seguintes plugins no classpath:
-
-		vraptor-environment
-		vraptor-simplemail
+Para usar o VRaptor Error Control é necessário ter o [vraptor-simplemail](https://github.com/caelum/vraptor-simplemail) no seu classpath.
 
 # Configurando
 No seu arquivo environment.properties(do vraptor-environment), é necessário configurar as seguintes chaves
