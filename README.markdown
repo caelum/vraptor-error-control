@@ -10,14 +10,14 @@ Vraptor-error-control.jar can be downloaded from maven's repository, or configur
 		<dependency>
 			<groupId>br.com.caelum.vraptor</groupId>
 			<artifactId>vraptor-error-control</artifactId>
-			<version>4.0.0</version>
+			<version>4.0.2</version>
 			<scope>compile</scope>
 		</dependency>
 
 
 # Dependencies
 
-To use Vraptor Error Control you need to put [vraptor-simplemail](https://github.com/caelum/vraptor-simplemail) at your classpath 
+To use VRaptor Error Control you need to put [vraptor-simplemail](https://github.com/caelum/vraptor-simplemail) at your classpath 
 
 
 # Configuring
