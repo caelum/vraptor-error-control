@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.caelum.vraptor.environment.DefaultEnvironment;
 import org.apache.commons.mail.EmailException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.caelum.vraptor.environment.ServletBasedEnvironment;
 import br.com.caelum.vraptor.errormail.mail.ErrorMail;
 import br.com.caelum.vraptor.errormail.mail.ErrorMailFactory;
 import br.com.caelum.vraptor.errormail.mail.ErrorMailer;
@@ -28,7 +28,7 @@ public class ErrorLoggerServlet extends HttpServlet {
 	private ErrorMailer mailer;
 	
 	@Inject
-	private ServletBasedEnvironment env;
+	private DefaultEnvironment env;
 
 	@Override
 	public void service(HttpServletRequest req, HttpServletResponse res)
